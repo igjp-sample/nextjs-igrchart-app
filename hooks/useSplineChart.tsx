@@ -14,12 +14,28 @@ interface IIgnLegendProps extends IIgrLegendProps {
 export const IgnCategoryChart = dynamic(
   async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { IgrCategoryChart, IgrCategoryChartModule, IgrDataChartInteractivityModule } = await import(
+    const { 
+      IgrCategoryChart, 
+      IgrCategoryChartModule, 
+      IgrDataChartInteractivityModule,
+      IgrCategoryChartCoreModule, 
+      IgrDataChartVerticalCategoryModule,
+      IgrDataChartAnnotationModule,
+      IgrDataChartExtendedAxesModule,
+     } = await import(
       "igniteui-react-charts"
     );
 
     IgrCategoryChartModule.register();
     IgrDataChartInteractivityModule.register();
+
+    IgrCategoryChartCoreModule.register();
+    IgrDataChartVerticalCategoryModule.register();
+    IgrDataChartAnnotationModule.register();
+    IgrDataChartExtendedAxesModule.register();
+
+    // ダイナミックインポートが完了したことを確認するためのログ
+    console.log("IgrCategoryChartComponent dynamically imported.");
 
     // refを設定するために新しく表示用のコンポーネントを作成
     const IgnCategoryChartComponent = ({
@@ -43,6 +59,9 @@ export const IgnLegend = dynamic(
 
     IgrLegendModule.register();
 
+    // ダイナミックインポートが完了したことを確認するためのログ
+    console.log("IgrLegendComponent dynamically imported.");
+    
     // refを設定するために新しく表示用のコンポーネントを作成
     const IgnLegendComponent = ({
       legendRef,

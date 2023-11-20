@@ -84,13 +84,6 @@ export class CountryRenewableElectricity extends Array<CountryRenewableElectrici
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2018`,
-          europe: 40,
-          china: 134,
-          america: 34
-      }));
-      this.push(new CountryRenewableElectricityItem(
-      {
           year: `2019`,
           europe: 80,
           china: 96,
