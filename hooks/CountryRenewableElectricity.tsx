@@ -3,10 +3,10 @@ export class CountryRenewableElectricityItem {
       Object.assign(this, init);
   }
 
-  public year: string;
-  public europe: number;
-  public china: number;
-  public america: number;
+  public x: string;
+  public A: number;
+  public B: number;
+  public C: number;
 
 }
 export class CountryRenewableElectricity extends Array<CountryRenewableElectricityItem> {
@@ -14,80 +14,80 @@ export class CountryRenewableElectricity extends Array<CountryRenewableElectrici
       super();
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2009`,
-          europe: 34,
-          china: 21,
-          america: 19
+          x: `00:00:00`,
+          A: 34,
+          B: 21,
+          C: 19
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2010`,
-          europe: 43,
-          china: 26,
-          america: 24
+          x: `00:00:05`,
+          A: 43,
+          B: 26,
+          C: 24
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2011`,
-          europe: 66,
-          china: 29,
-          america: 28
+          x: `00:00:10`,
+          A: 66,
+          B: 29,
+          C: 28
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2012`,
-          europe: 69,
-          china: 32,
-          america: 26
+          x: `00:00:15`,
+          A: 69,
+          B: 32,
+          C: 26
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2013`,
-          europe: 58,
-          china: 47,
-          america: 38
+          x: `00:00:20`,
+          A: 58,
+          B: 47,
+          C: 38
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2014`,
-          europe: 40,
-          china: 46,
-          america: 31
+          x: `00:00:25`,
+          A: 40,
+          B: 46,
+          C: 31
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2015`,
-          europe: 78,
-          china: 50,
-          america: 19
+          x: `00:00:30`,
+          A: 78,
+          B: 50,
+          C: 19
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2016`,
-          europe: 13,
-          china: 90,
-          america: 52
+          x: `00:00:35`,
+          A: 13,
+          B: 90,
+          C: 52
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2017`,
-          europe: 78,
-          china: 132,
-          america: 50
+          x: `00:00:40`,
+          A: 78,
+          B: 132,
+          C: 50
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2018`,
-          europe: 40,
-          china: 134,
-          america: 34
+          x: `00:00:45`,
+          A: 40,
+          B: 134,
+          C: 34
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          year: `2019`,
-          europe: 80,
-          china: 96,
-          america: 38
+          x: `00:00:50`,
+          A: 80,
+          B: 96,
+          C: 38
       }));
   }
 }

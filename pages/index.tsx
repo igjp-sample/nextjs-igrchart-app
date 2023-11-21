@@ -17,8 +17,9 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
-        <Link href="./SplineChart">スプラインチャートページ</Link>
         <Link href="./StepChart">ステップ折れ線チャートページ</Link>
+        <Link href="./SplineChart">スプラインチャートページ</Link>
+        <Link href="./SelectList">リスト選択ページ</Link>
         
       </main>
 

@@ -4,15 +4,57 @@ import { IgrCategoryChart , IgrLegend} from "igniteui-react-charts";
 import { IgnCategoryChart , IgnLegend} from "../hooks/useSplineChart";
 import { CountryRenewableElectricityItem, CountryRenewableElectricity } from '../hooks/CountryRenewableElectricity';
 
+import { IgrList, IgrListHeader, IgrListItem } from 'igniteui-react';
+import { IgnList, IgnListHeader, IgnListItem } from "../hooks/useList";
+
 const SplineChart = () => {
   const categoryChartRef = useRef<IgrCategoryChart>(null);
   const legendRef = useRef<IgrLegend>(null);
+
+  const listRef = useRef<IgrList>(null);
+  const listItemRef = useRef<IgrListItem>(null);
+  const listHeaderRef = useRef<IgrListHeader>(null);
 
   const dummyData: CountryRenewableElectricityItem[] = new CountryRenewableElectricity();
   console.log(dummyData);
 
   return (
     <div className="container sample">
+
+      {/* <div className="list">
+        <IgnList listRef={listRef}>
+          <IgnListHeader listHeaderRef={listHeaderRef}>
+            <span>Header</span>
+          </IgnListHeader>
+          <IgnListItem listItemRef={listItemRef}>
+            <h2 slot="title">Item 1</h2>
+          </IgnListItem>
+          <IgnListItem listItemRef={listItemRef}>
+            <h2 slot="title">Item 2</h2>
+          </IgnListItem>
+          <IgnListItem listItemRef={listItemRef}>
+            <h2 slot="title">Item 3</h2>
+          </IgnListItem>
+        </IgnList>
+      </div> */}
+
+      <div className="list">
+        <IgnList>
+          <IgnListHeader>
+            <span>Header</span>
+          </IgnListHeader>
+          <IgnListItem>
+            <h2 slot="title">Item 1</h2>
+          </IgnListItem>
+          <IgnListItem>
+            <h2 slot="title">Item 2</h2>
+          </IgnListItem>
+          <IgnListItem>
+            <h2 slot="title">Item 3</h2>
+          </IgnListItem>
+        </IgnList>
+      </div>
+      
       <div className="legend-title">
         Renewable Electricity Generated
       </div>
