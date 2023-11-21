@@ -4,7 +4,7 @@ import { IgrCategoryChart , IgrLegend} from "igniteui-react-charts";
 import { IgnCategoryChart , IgnLegend} from "../hooks/useSplineChart";
 import { CountryRenewableElectricityItem, CountryRenewableElectricity } from '../hooks/CountryRenewableElectricity';
 
-const SplineChart = () => {
+const CategorySplineChart = () => {
   const categoryChartRef = useRef<IgrCategoryChart>(null);
   const legendRef = useRef<IgrLegend>(null);
 
@@ -61,4 +61,4 @@ const SplineChart = () => {
 
 };
 
-export default SplineChart;
+export default CategorySplineChart;

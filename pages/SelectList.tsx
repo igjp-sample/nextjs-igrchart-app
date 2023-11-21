@@ -7,7 +7,7 @@ import { CountryRenewableElectricityItem, CountryRenewableElectricity } from '..
 import { IgrList, IgrListHeader, IgrListItem } from 'igniteui-react';
 import { IgnList, IgnListHeader, IgnListItem } from "../hooks/useList";
 
-const SplineChart = () => {
+const SelectList = () => {
   const categoryChartRef = useRef<IgrCategoryChart>(null);
   const legendRef = useRef<IgrLegend>(null);
 
@@ -101,4 +101,4 @@ const SplineChart = () => {
 
 };
 
-export default SplineChart;
+export default SelectList;
