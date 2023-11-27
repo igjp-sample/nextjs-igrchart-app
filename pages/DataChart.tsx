@@ -1,7 +1,7 @@
 import React from "react";
 import { useRef, useState} from "react";
 import { IgrNumericYAxis,IgrCategoryXAxis,IgrLineSeries,IgrDataChart } from "igniteui-react-charts";
-import { IgnNumericYAxis,IgnCategoryXAxis,IgnLineSeries,IgnDataChart } from "../hooks/useDataChart";
+import { IgnNumericYAxis,IgnCategoryXAxis,IgnLineSeries,IgnDataChart,FIgrDataChart,FIgrCategoryXAxis } from "../hooks/useDataChart";
 import { CountryRenewableElectricityItem, CountryRenewableElectricity } from "../hooks/CountryRenewableElectricity";
 
 const DataChart = () => {
@@ -18,48 +18,48 @@ const DataChart = () => {
   return (
     <div className="container sample">
       <div className="container" style={{height: "100%"}}>
-      <IgnDataChart 
-        dataChartRef={dataChartRef}
+      <FIgrDataChart
+        //dataChartRef={dataChartRef}
         width="800px"
         height="500px"
         dataSource={dummyData}
         isHorizontalZoomEnabled={true}
         isVerticalZoomEnabled={true}>
 
-        <IgnCategoryXAxis
-          categoryXAxisRef={categoryXAxisRef} 
-          name="xAxis" 
-          label="Year" 
-          />
+        <FIgrCategoryXAxis
+          //categoryXAxisRef={categoryXAxisRef}
+          name="xAxis"
+          label="Year"
+        ></FIgrCategoryXAxis>
 
-        {/* <IgnNumericYAxis 
-//          numericYAxisRef={numericYAxisRef} 
-          name="yAxis" 
+        {/* <IgnNumericYAxis
+//          numericYAxisRef={numericYAxisRef}
+          name="yAxis"
           /> */}
 
-        {/* <IgnLineSeries 
-//          lineSeriesRef={lineSeriesRef} 
-          name="series1" 
+        {/* <IgnLineSeries
+//          lineSeriesRef={lineSeriesRef}
+          name="series1"
           title="USA"
           valueMemberPath="USA"
           xAxisName="xAxis"
           yAxisName="yAxis" />
-        <IgnLineSeries 
-//          lineSeriesRef={lineSeriesRef} 
-          name="series2" 
+        <IgnLineSeries
+//          lineSeriesRef={lineSeriesRef}
+          name="series2"
           title="China"
           valueMemberPath="China"
           xAxisName="xAxis"
           yAxisName="yAxis" />
-        <IgnLineSeries 
-//          lineSeriesRef={lineSeriesRef} 
-          name="series3" 
+        <IgnLineSeries
+//          lineSeriesRef={lineSeriesRef}
+          name="series3"
           title="Russia"
           valueMemberPath="Russia"
           xAxisName="xAxis"
           yAxisName="yAxis" /> */}
 
-      </IgnDataChart>
+      </FIgrDataChart>
 
       {/* <IgnDataChart dataChartRef={dataChartRef}
         width="100%"
@@ -87,7 +87,7 @@ const DataChart = () => {
 
       </div>
     </div>
-    
+
     // <div className="container sample">
     //   <div className="container fill">
     //     <IgnCategoryChart
