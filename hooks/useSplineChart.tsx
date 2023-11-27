@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import React, { LegacyRef } from "react";
-import { IgrCategoryChart, IIgrCategoryChartProps } from 'igniteui-react-charts';
-import { IgrLegend, IIgrLegendProps } from 'igniteui-react-charts';
+import { IgrCategoryChart, IIgrCategoryChartProps } from "igniteui-react-charts";
+import { IgrLegend, IIgrLegendProps } from "igniteui-react-charts";
 
 // ref インターフェース
 interface IIgnCategoryChartProps extends IIgrCategoryChartProps {
@@ -17,6 +17,7 @@ export const IgnCategoryChart = dynamic(
     const { 
       IgrCategoryChart, 
       IgrCategoryChartModule, 
+
       IgrDataChartInteractivityModule,
       IgrCategoryChartCoreModule, 
       IgrDataChartVerticalCategoryModule,
@@ -27,8 +28,8 @@ export const IgnCategoryChart = dynamic(
     );
 
     IgrCategoryChartModule.register();
+    
     IgrDataChartInteractivityModule.register();
-
     IgrCategoryChartCoreModule.register();
     IgrDataChartVerticalCategoryModule.register();
     IgrDataChartAnnotationModule.register();

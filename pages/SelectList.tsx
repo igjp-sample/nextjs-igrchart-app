@@ -1,10 +1,10 @@
-import React from 'react';
-import { useRef, useState} from 'react';
+import React from "react";
+import { useRef, useState} from "react";
 import { IgrCategoryChart , IgrLegend} from "igniteui-react-charts";
 import { IgnCategoryChart , IgnLegend} from "../hooks/useSplineChart";
-import { CountryRenewableElectricityItem, CountryRenewableElectricity } from '../hooks/CountryRenewableElectricity';
+import { CountryRenewableElectricityItem, CountryRenewableElectricity } from "../hooks/CountryRenewableElectricity";
 
-import { IgrList, IgrListHeader, IgrListItem } from 'igniteui-react';
+import { IgrList, IgrListHeader, IgrListItem } from "igniteui-react";
 import { IgnList, IgnListHeader, IgnListItem } from "../hooks/useList";
 
 const SelectList = () => {
@@ -38,7 +38,7 @@ const SelectList = () => {
         </IgnList>
       </div> */}
 
-      <div className="list">
+      {/* <div className="list">
         <IgnList>
           <IgnListHeader>
             <span>Header</span>
@@ -53,7 +53,7 @@ const SelectList = () => {
             <h2 slot="title">Item 3</h2>
           </IgnListItem>
         </IgnList>
-      </div>
+      </div> */}
       
       <div className="legend-title">
         Renewable Electricity Generated

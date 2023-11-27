@@ -1,8 +1,8 @@
-import React from 'react';
-import { useRef, useState} from 'react';
+import React from "react";
+import { useRef, useState} from "react";
 import { IgrCategoryChart , IgrLegend} from "igniteui-react-charts";
 import { IgnCategoryChart , IgnLegend} from "../hooks/useSplineChart";
-import { CountryRenewableElectricityItem, CountryRenewableElectricity } from '../hooks/CountryRenewableElectricity';
+import { CountryRenewableElectricityItem, CountryRenewableElectricity } from "../hooks/CountryRenewableElectricity";
 
 const CategorySplineChart = () => {
   const categoryChartRef = useRef<IgrCategoryChart>(null);
@@ -10,6 +10,8 @@ const CategorySplineChart = () => {
 
   const dummyData: CountryRenewableElectricityItem[] = new CountryRenewableElectricity();
   console.log(dummyData);
+  console.log(categoryChartRef);
+  console.log(legendRef);
 
   return (
     <div className="container sample">
