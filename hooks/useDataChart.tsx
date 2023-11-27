@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { LegacyRef } from "react";
+import React, { forwardRef, LegacyRef, PropsWithChildren } from "react";
 import { IgrDataChart, IIgrDataChartProps } from "igniteui-react-charts";
 
 import { IgrNumericYAxis, IIgrNumericYAxisProps } from "igniteui-react-charts";
@@ -12,8 +12,6 @@ interface IIgnDataChartProps extends IIgrDataChartProps {
 }
 interface IIgnCategoryXAxisProps extends IIgrCategoryXAxisProps {
   categoryXAxisRef: LegacyRef<IgrCategoryXAxis>;
-  name : string;
-  label : string;
 }
 interface IIgnNumericYAxisProps extends IIgrNumericYAxisProps {
 //  numericYAxisRef: LegacyRef<IgrNumericYAxis>;
@@ -29,12 +27,12 @@ interface IIgnLineSeriesProps extends IIgrLineSeriesProps {
 export const IgnDataChart = dynamic(
   async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { 
+    const {
       IgrDataChart,
       IgrDataChartCoreModule,
       IgrDataChartCategoryModule,
 
-      IgrDataChartInteractivityModule, 
+      IgrDataChartInteractivityModule,
       IgrCategoryChartCoreModule,
       IgrDataChartVerticalCategoryModule,
       IgrDataChartAnnotationModule,
@@ -60,7 +58,7 @@ export const IgnDataChart = dynamic(
       dataChartRef,
       ...props
     }: IIgnDataChartProps) => {
-      return <IgrDataChart ref={dataChartRef} {...props} />;
+      return <IgrDataChart ref={dataChartRef} {...props}></IgrDataChart>;
     };
 
     return IgnDataChartComponent;
@@ -68,17 +66,21 @@ export const IgnDataChart = dynamic(
   { ssr: false }
 );
 
+export const FIgrDataChart = forwardRef<any, PropsWithChildren<IIgrDataChartProps>>((props, ref) => {
+  return <IgnDataChart dataChartRef={ref} {...props}>{props.children}</IgnDataChart>
+});
+
 export const IgnCategoryXAxis = dynamic(
   async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { 
+    const {
       IgrCategoryXAxis,
-      IgrCategoryXAxisModule,
+      IgrDataChartCategoryModule,
      } = await import(
       "igniteui-react-charts"
     );
 
-    IgrCategoryXAxisModule.register();
+    IgrDataChartCategoryModule.register();
 
     // ダイナミックインポートが完了したことを確認するためのログ
     console.log("IgrCategoryXAxisComponent dynamically imported.");
@@ -86,13 +88,11 @@ export const IgnCategoryXAxis = dynamic(
     // refを設定するために新しく表示用のコンポーネントを作成
     const IgnCategoryXAxisComponent = ({
       categoryXAxisRef,
-      name,
-      label,
       ...props
     }: IIgnCategoryXAxisProps) => {
-//      return <IgrCategoryXAxis name="xAxis" {...props} />;
+      return <IgrCategoryXAxis ref={categoryXAxisRef} {...props}></IgrCategoryXAxis>;
 //      return <IgrCategoryXAxis ref={categoryXAxisRef} name={name} {...props} />;
-      return <IgrCategoryXAxis ref={categoryXAxisRef} name={name} label={label} {...props} />;
+      //return <IgrCategoryXAxis ref={categoryXAxisRef} name={name} label={label} {...props} />;
     };
 
     return IgnCategoryXAxisComponent;
@@ -100,10 +100,14 @@ export const IgnCategoryXAxis = dynamic(
   { ssr: false }
 );
 
+export const FIgrCategoryXAxis = forwardRef<any, IIgrCategoryXAxisProps>((props, ref) => {
+  return <IgnCategoryXAxis categoryXAxisRef={ref} {...props}></IgnCategoryXAxis>
+});
+
 export const IgnNumericYAxis = dynamic(
   async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { 
+    const {
       IgrNumericYAxis,
       IgrNumericYAxisModule,
      } = await import(
@@ -134,7 +138,7 @@ export const IgnNumericYAxis = dynamic(
 export const IgnLineSeries = dynamic(
   async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    const { 
+    const {
       IgrLineSeries,
       IgrLineSeriesModule,
      } = await import(
