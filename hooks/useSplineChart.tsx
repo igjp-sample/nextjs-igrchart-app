@@ -28,7 +28,6 @@ export const IgnCategoryChart = dynamic(
     );
 
     IgrCategoryChartModule.register();
-    
     IgrDataChartInteractivityModule.register();
     IgrCategoryChartCoreModule.register();
     IgrDataChartVerticalCategoryModule.register();

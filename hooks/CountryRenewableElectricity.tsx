@@ -3,10 +3,10 @@ export class CountryRenewableElectricityItem {
       Object.assign(this, init);
   }
 
-  public x: string;
-  public A: number;
-  public B: number;
-  public C: number;
+  public X: string;
+  public USA: number;
+  public China: number;
+  public Russia: number;
 
 }
 export class CountryRenewableElectricity extends Array<CountryRenewableElectricityItem> {
@@ -14,80 +14,80 @@ export class CountryRenewableElectricity extends Array<CountryRenewableElectrici
       super();
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:00`,
-          A: 34,
-          B: 21,
-          C: 19
+          X: `00:00:00`,
+          USA: 34,
+          China: 21,
+          Russia: 19
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:05`,
-          A: 43,
-          B: 26,
-          C: 24
+          X: `00:00:05`,
+          USA: 43,
+          China: 26,
+          Russia: 24
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:10`,
-          A: 66,
-          B: 29,
-          C: 28
+          X: `00:00:10`,
+          USA: 66,
+          China: 29,
+          Russia: 28
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:15`,
-          A: 69,
-          B: 32,
-          C: 26
+          X: `00:00:15`,
+          USA: 69,
+          China: 32,
+          Russia: 26
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:20`,
-          A: 58,
-          B: 47,
-          C: 38
+          X: `00:00:20`,
+          USA: 58,
+          China: 47,
+          Russia: 38
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:25`,
-          A: 40,
-          B: 46,
-          C: 31
+          X: `00:00:25`,
+          USA: 40,
+          China: 46,
+          Russia: 31
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:30`,
-          A: 78,
-          B: 50,
-          C: 19
+          X: `00:00:30`,
+          USA: 78,
+          China: 50,
+          Russia: 19
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:35`,
-          A: 13,
-          B: 90,
-          C: 52
+          X: `00:00:35`,
+          USA: 13,
+          China: 90,
+          Russia: 52
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:40`,
-          A: 78,
-          B: 132,
-          C: 50
+          X: `00:00:40`,
+          USA: 78,
+          China: 132,
+          Russia: 50
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:45`,
-          A: 40,
-          B: 134,
-          C: 34
+          X: `00:00:45`,
+          USA: 40,
+          China: 134,
+          Russia: 34
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          x: `00:00:50`,
-          A: 80,
-          B: 96,
-          C: 38
+          X: `00:00:50`,
+          USA: 80,
+          China: 96,
+          Russia: 38
       }));
   }
 }

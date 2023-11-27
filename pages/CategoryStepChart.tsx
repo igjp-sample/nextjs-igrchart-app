@@ -9,21 +9,21 @@ const CategorySplineChart = () => {
   const legendRef = useRef<IgrLegend>(null);
 
   const dummyData: CountryRenewableElectricityItem[] = [
-    { x: `10km`,A: 2,B: 4,C: 6 },
-    { x: `20km`,A: 2,B: 4,C: 6 },
-    { x: `30km`,A: 3,B: 4,C: 6 },
-    { x: `40km`,A: 2,B: 5,C: 6 },
-    { x: `50km`,A: 2,B: 4,C: 7 },
-    { x: `60km`,A: 2,B: 4,C: 6 },
-    { x: `70km`,A: 3,B: 4,C: 6 },
-    { x: `80km`,A: 2,B: 5,C: 6 },
-    { x: `100km`,A: 2,B: 4,C: 7 },
-    { x: `110km`,A: 2,B: 4,C: 6 },
-    { x: `120km`,A: 3,B: 4,C: 6 },
-    { x: `130km`,A: 2,B: 5,C: 6 },
-    { x: `140km`,A: 2,B: 4,C: 7 },
-    { x: `150km`,A: 2,B: 4,C: 6 },
-    { x: `160km`,A: 2,B: 4,C: 6 },
+    { X: `10km`,USA: 2,China: 4,Russia: 6 },
+    { X: `20km`,USA: 2,China: 4,Russia: 6 },
+    { X: `30km`,USA: 3,China: 4,Russia: 6 },
+    { X: `40km`,USA: 2,China: 5,Russia: 6 },
+    { X: `50km`,USA: 2,China: 4,Russia: 7 },
+    { X: `60km`,USA: 2,China: 4,Russia: 6 },
+    { X: `70km`,USA: 3,China: 4,Russia: 6 },
+    { X: `80km`,USA: 2,China: 5,Russia: 6 },
+    { X: `100km`,USA: 2,China: 4,Russia: 7 },
+    { X: `110km`,USA: 2,China: 4,Russia: 6 },
+    { X: `120km`,USA: 3,China: 4,Russia: 6 },
+    { X: `130km`,USA: 2,China: 5,Russia: 6 },
+    { X: `140km`,USA: 2,China: 4,Russia: 7 },
+    { X: `150km`,USA: 2,China: 4,Russia: 6 },
+    { X: `160km`,USA: 2,China: 4,Russia: 6 },
   ];
   console.log(dummyData);
 
