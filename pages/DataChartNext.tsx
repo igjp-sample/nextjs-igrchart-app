@@ -18,7 +18,7 @@ const DataChartNext = () => {
 
         <FIgrCategoryXAxis
           name="xAxis" 
-          label="Year" 
+          label="X" 
         ></FIgrCategoryXAxis>
 
         <FIgrNumericYAxis 
