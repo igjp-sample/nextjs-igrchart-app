@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import { 
-  FIgrDataChart, FIgrCategoryXAxis, FIgrNumericYAxis, FIgrNumericXAxis,
+  FIgrDataChart, FIgrCategoryXAxis, FIgrNumericYAxis,
   FIgrLineSeries, FIgrSplineSeries, FIgrStepLineSeries, 
 } from "../hooks/useDataChart";
 import { 
@@ -11,10 +11,48 @@ const DataChartNext = () => {
   const dummyData: CountryRenewableElectricityItem[] = new CountryRenewableElectricity();
   console.log(dummyData);
 
+  // useRefを使用してrefを作成
+  // const dataChartRef = useRef(null);
+  // useRefを使用してrefとしてonChartRefを作成
+  const onChartRef = useRef((chart) => {
+    // ここにchartが利用可能なロジックを追加
+    // 例：chart.syncChannel = "ChannelA";
+    chart.synchronizeHorizontally = true;
+    chart.synchronizeVertically = true;
+  });
+  console.log(onChartRef);
+
   return (
     <div className="container sample">
       <div className="container" style={{height: "100%"}}>
       <FIgrDataChart 
+        ref={onChartRef.current}
+        width="800px"
+        height="500px"
+        dataSource={dummyData}
+        isHorizontalZoomEnabled={true}
+        isVerticalZoomEnabled={true}>
+
+        <FIgrCategoryXAxis
+          name="xAxis" 
+          label="X" 
+        ></FIgrCategoryXAxis>
+
+        <FIgrNumericYAxis 
+          name="yAxis" 
+        ></FIgrNumericYAxis>
+
+        <FIgrStepLineSeries 
+          name="series3" 
+          valueMemberPath="Russia"
+          xAxisName="xAxis" 
+          yAxisName="yAxis" 
+        ></FIgrStepLineSeries>
+
+      </FIgrDataChart>
+
+      <FIgrDataChart 
+        ref={onChartRef.current}
         width="800px"
         height="500px"
         dataSource={dummyData}
