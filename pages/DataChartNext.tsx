@@ -1,6 +1,11 @@
 import React from "react";
-import { FIgrDataChart, FIgrCategoryXAxis, FIgrNumericYAxis, FIgrLineSeries } from "../hooks/useDataChart";
-import { CountryRenewableElectricityItem, CountryRenewableElectricity } from "../hooks/CountryRenewableElectricity";
+import { 
+  FIgrDataChart, FIgrCategoryXAxis, FIgrNumericYAxis, FIgrNumericXAxis,
+  FIgrLineSeries, FIgrScatterSplineSeries, FIgrStepLineSeries, 
+} from "../hooks/useDataChart";
+import { 
+  CountryRenewableElectricityItem, CountryRenewableElectricity 
+} from "../hooks/CountryRenewableElectricity";
 
 const DataChartNext = () => {
   const dummyData: CountryRenewableElectricityItem[] = new CountryRenewableElectricity();
@@ -23,7 +28,17 @@ const DataChartNext = () => {
 
         <FIgrNumericYAxis 
           name="yAxis" 
+          minimumValue={0} 
+          maximumValue={140} 
+          interval={20}
         ></FIgrNumericYAxis>
+
+        <FIgrNumericXAxis 
+          name="xAxis2" 
+          minimumValue={0} 
+          maximumValue={50} 
+          interval={5}
+        ></FIgrNumericXAxis>
 
         <FIgrLineSeries 
           name="series1" 
@@ -31,23 +46,23 @@ const DataChartNext = () => {
           valueMemberPath="USA"
           xAxisName="xAxis"
           yAxisName="yAxis"
-          ></FIgrLineSeries>
+        ></FIgrLineSeries>
 
-        <FIgrLineSeries 
+        <FIgrScatterSplineSeries 
           name="series2" 
-          title="China"
-          valueMemberPath="China"
-          xAxisName="xAxis"
-          yAxisName="yAxis"
-          ></FIgrLineSeries>
+          xMemberPath="X" 
+          yMemberPath="China"
+          xAxisName="xAxis2"
+          yAxisName="yAxis" 
+          markerType="Circle" 
+        ></FIgrScatterSplineSeries>
 
-        <FIgrLineSeries 
+        <FIgrStepLineSeries 
           name="series3" 
-          title="Russia"
           valueMemberPath="Russia"
-          xAxisName="xAxis"
-          yAxisName="yAxis"
-          ></FIgrLineSeries>
+          xAxisName="xAxis" 
+          yAxisName="yAxis" 
+        ></FIgrStepLineSeries>
 
       </FIgrDataChart>
       </div>

@@ -3,7 +3,7 @@ export class CountryRenewableElectricityItem {
       Object.assign(this, init);
   }
 
-  public X: string;
+  public X: number;
   public USA: number;
   public China: number;
   public Russia: number;
@@ -14,77 +14,77 @@ export class CountryRenewableElectricity extends Array<CountryRenewableElectrici
       super();
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:00`,
+          X: 0,
           USA: 34,
           China: 21,
           Russia: 19
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:05`,
+          X: 5,
           USA: 43,
           China: 26,
           Russia: 24
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:10`,
+          X: 10,
           USA: 66,
           China: 29,
           Russia: 28
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:15`,
+          X: 15,
           USA: 69,
           China: 32,
           Russia: 26
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:20`,
+          X: 20,
           USA: 58,
           China: 47,
           Russia: 38
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:25`,
+          X: 25,
           USA: 40,
           China: 46,
           Russia: 31
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:30`,
+          X: 30,
           USA: 78,
           China: 50,
           Russia: 19
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:35`,
+          X: 35,
           USA: 13,
           China: 90,
           Russia: 52
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:40`,
+          X: 40,
           USA: 78,
           China: 132,
           Russia: 50
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:45`,
+          X: 45,
           USA: 40,
           China: 134,
           Russia: 34
       }));
       this.push(new CountryRenewableElectricityItem(
       {
-          X: `00:00:50`,
+          X: 50,
           USA: 80,
           China: 96,
           Russia: 38
