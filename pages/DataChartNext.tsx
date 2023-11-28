@@ -1,7 +1,7 @@
 import React from "react";
 import { 
   FIgrDataChart, FIgrCategoryXAxis, FIgrNumericYAxis, FIgrNumericXAxis,
-  FIgrLineSeries, FIgrScatterSplineSeries, FIgrStepLineSeries, 
+  FIgrLineSeries, FIgrSplineSeries, FIgrStepLineSeries, 
 } from "../hooks/useDataChart";
 import { 
   CountryRenewableElectricityItem, CountryRenewableElectricity 
@@ -28,17 +28,7 @@ const DataChartNext = () => {
 
         <FIgrNumericYAxis 
           name="yAxis" 
-          minimumValue={0} 
-          maximumValue={140} 
-          interval={20}
         ></FIgrNumericYAxis>
-
-        <FIgrNumericXAxis 
-          name="xAxis2" 
-          minimumValue={0} 
-          maximumValue={50} 
-          interval={5}
-        ></FIgrNumericXAxis>
 
         <FIgrLineSeries 
           name="series1" 
@@ -48,14 +38,12 @@ const DataChartNext = () => {
           yAxisName="yAxis"
         ></FIgrLineSeries>
 
-        <FIgrScatterSplineSeries 
+        <FIgrSplineSeries 
           name="series2" 
-          xMemberPath="X" 
-          yMemberPath="China"
-          xAxisName="xAxis2"
+          valueMemberPath="China"
+          xAxisName="xAxis"
           yAxisName="yAxis" 
-          markerType="Circle" 
-        ></FIgrScatterSplineSeries>
+        ></FIgrSplineSeries>
 
         <FIgrStepLineSeries 
           name="series3" 

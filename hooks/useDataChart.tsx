@@ -6,7 +6,7 @@ import {
   IgrNumericXAxis, IIgrNumericXAxisProps, 
   IgrCategoryXAxis, IIgrCategoryXAxisProps, 
   IgrLineSeries, IIgrLineSeriesProps, 
-  IgrScatterSplineSeries, IIgrScatterSplineSeriesProps, 
+  IgrSplineSeries, IIgrSplineSeriesProps, 
   IgrStepLineSeries, IIgrStepLineSeriesProps,
 } from "igniteui-react-charts";
 
@@ -26,8 +26,8 @@ interface IIgnNumericYAxisProps extends IIgrNumericYAxisProps {
 interface IIgnLineSeriesProps extends IIgrLineSeriesProps {
   lineSeriesRef: LegacyRef<IgrLineSeries>;
 }
-interface IIgnScatterSplineSeriesProps extends IIgrScatterSplineSeriesProps {
-  scatterSplineSeriesRef: LegacyRef<IgrScatterSplineSeries>;
+interface IIgnSplineSeriesProps extends IIgrSplineSeriesProps {
+  splineSeriesRef: LegacyRef<IgrSplineSeries>;
 }
 interface IIgnStepLineSeriesProps extends IIgrStepLineSeriesProps {
   stepLineSeriesRef: LegacyRef<IgrStepLineSeries>;
@@ -49,8 +49,8 @@ export const FIgrNumericYAxis = forwardRef<any, IIgrNumericYAxisProps>((props, r
 export const FIgrLineSeries = forwardRef<any, IIgrLineSeriesProps>((props, ref) => {
   return <IgnLineSeries lineSeriesRef={ref} {...props}></IgnLineSeries>
 });
-export const FIgrScatterSplineSeries = forwardRef<any, IIgrScatterSplineSeriesProps>((props, ref) => {
-  return <IgnScatterSplineSeries scatterSplineSeriesRef={ref} {...props}></IgnScatterSplineSeries>
+export const FIgrSplineSeries = forwardRef<any, IIgrSplineSeriesProps>((props, ref) => {
+  return <IgnSplineSeries splineSeriesRef={ref} {...props}></IgnSplineSeries>
 });
 export const FIgrStepLineSeries = forwardRef<any, IIgrStepLineSeriesProps>((props, ref) => {
   return <IgnStepLineSeries stepLineSeriesRef={ref} {...props}></IgnStepLineSeries>
@@ -209,31 +209,31 @@ export const IgnLineSeries = dynamic(
   { ssr: false }
 );
 
-// スプライン散布図 ダイナミックインポート
-export const IgnScatterSplineSeries = dynamic(
+// スプライングラフ ダイナミックインポート
+export const IgnSplineSeries = dynamic(
   async () => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     const { 
-      IgrScatterSplineSeries,
-      IgrScatterSplineSeriesModule,
+      IgrSplineSeries,
+      IgrSplineSeriesModule,
      } = await import(
       "igniteui-react-charts"
     );
 
-    IgrScatterSplineSeriesModule.register();
+    IgrSplineSeriesModule.register();
 
     // ダイナミックインポートが完了したことを確認するためのログ
-    console.log("IgrScatterSplineSeriesComponent dynamically imported.");
+    console.log("IgrSplineSeriesComponent dynamically imported.");
 
     // refを設定するために新しく表示用のコンポーネントを作成
-    const IgnScatterSplineSeriesComponent = ({
-      scatterSplineSeriesRef,
+    const IgnSplineSeriesComponent = ({
+      splineSeriesRef,
       ...props
-    }: IIgnScatterSplineSeriesProps) => {
-      return <IgrScatterSplineSeries ref={scatterSplineSeriesRef} {...props}></IgrScatterSplineSeries>;
+    }: IIgnSplineSeriesProps) => {
+      return <IgrSplineSeries ref={splineSeriesRef} {...props}></IgrSplineSeries>;
     };
 
-    return IgnScatterSplineSeriesComponent;
+    return IgnSplineSeriesComponent;
   },
   { ssr: false }
 );
