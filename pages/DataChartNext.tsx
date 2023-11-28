@@ -11,7 +11,14 @@ import { IgrDataChart } from "igniteui-react-charts";
 class DataChartNext extends React.Component {
   public dummyData: CountryRenewableElectricityItem[] = new CountryRenewableElectricity();
   public chart: IgrDataChart;
- 
+  readonly highlightingMode = "FadeOthersSpecific";
+  // Auto
+  // Brighten
+  // BrightenSpecific
+  // FadeOthers
+  // FadeOthersSpecific
+  // None
+
   constructor(props) {
     super(props);
 
@@ -27,10 +34,25 @@ class DataChartNext extends React.Component {
     chart.synchronizeVertically = true;
   };
 
+  public onHighlightingModeChanged(e: any) {
+    const val = e.target.value;
+    this.setState({ highlightingMode: val});        
+  }  
+
   render() {
     return (
       <div className="container sample">
         <div className="container" style={{ height: "100%" }}>
+
+          <select id="highlightingMode" onChange={this.onHighlightingModeChanged}>
+            <option>Auto</option>
+            <option>Brighten</option>
+            <option>BrightenSpecific</option>
+            <option>FadeOthers</option>
+            <option>FadeOthersSpecific</option>
+            <option>None</option>
+          </select>
+
           <FIgrDataChart
             ref={this.onChartRef}
             width="800px"
@@ -56,7 +78,8 @@ class DataChartNext extends React.Component {
             dataSource={this.dummyData}
             isHorizontalZoomEnabled={true}
             isVerticalZoomEnabled={true}
-          >
+            highlightingMode={this.highlightingMode}
+            >
             <FIgrCategoryXAxis name="xAxis" label="X" />
             <FIgrNumericYAxis name="yAxis" />
             <FIgrLineSeries
@@ -83,6 +106,7 @@ class DataChartNext extends React.Component {
       </div>
     );
   }
+
 }
 
 export default DataChartNext;
