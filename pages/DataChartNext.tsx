@@ -10,11 +10,12 @@ import { IgrDataChart, IgrLineSeries } from "igniteui-react-charts";
 
 interface DataChartNextState {
   series1Thickness: number;
+  renderingText: string;
 }
 
 class DataChartNext extends React.Component<{}, DataChartNextState> {
   public dummyData: CountryRenewableElectricityItem[] = new CountryRenewableElectricity();
-  public chart: IgrDataChart;
+  public chartRef: IgrDataChart;
   readonly highlightingMode = "FadeOthersSpecific";
 
   constructor(props) {
@@ -22,6 +23,7 @@ class DataChartNext extends React.Component<{}, DataChartNextState> {
 
     this.state = {
       series1Thickness: 1,
+      renderingText: "", // 新しい state の初期値
     };
 
     this.onChartRef = this.onChartRef.bind(this);
@@ -31,35 +33,49 @@ class DataChartNext extends React.Component<{}, DataChartNextState> {
   onChartRef = (chart: IgrDataChart) => {
     if (!chart) { return; }
 
-    this.chart = chart;
+    this.chartRef = chart;
     console.log("Step 1");
+    console.log("Chart series:", this.chartRef.series);
   };
 
+  componentDidMount() {
+  //   // コンポーネントがマウントされた後に handleHighlightButtonClick を呼び出す
+  //   this.handleHighlightButtonClick();
+  }
+  
   handleHighlightButtonClick = () => {
     console.log("Step 2");
-
-    if (this.chart) {
+  
+    if (this.chartRef) {
       console.log("Step 3");
-
-      const series1 = this.chart.series.findByName("series1") as IgrLineSeries;
+  
+      const series1 = this.chartRef.series.findByName("series1") as IgrLineSeries;
+      // ここで series1 は null になる
+      console.log("series1:", series1);
 
       if (series1) {
         console.log("Step 4");
         // thickness の値を変更して線の太さを調整
         series1.thickness = 5;
-
-        // forceUpdateで再描画をトリガー
-        this.forceUpdate(() => {
-          console.log("Step 5: forceUpdate is completed.");
+  
+        // setState を使って状態を更新
+        this.setState({
+          series1Thickness: 5,
+          renderingText: "ボタンがクリックされました",
+        }, () => {
+          console.log("Step 5: setState is completed.");
           console.log("Updated series1Thickness:", this.state.series1Thickness);
           console.log("Updated series1 thickness:", series1.thickness);
+  
+          // ログを追加
+          console.log("Rendering text:", this.state.renderingText);
         });
       }
     }
   };
 
   render() {
-    const { series1Thickness } = this.state;
+    const { series1Thickness, renderingText } = this.state;
 
     return (
       <div className="container sample">
@@ -115,6 +131,9 @@ class DataChartNext extends React.Component<{}, DataChartNextState> {
           </FIgrDataChart>
 
           <button onClick={this.handleHighlightButtonClick}>Highlight Series</button>
+
+          {/* 新しい state を元に表示する */}
+          <div>{renderingText}</div>
         </div>
       </div>
     );

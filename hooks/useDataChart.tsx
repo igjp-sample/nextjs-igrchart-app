@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import React, { LegacyRef, forwardRef, PropsWithChildren } from "react";
+import React, { LegacyRef, forwardRef, PropsWithChildren, useEffect } from "react";
 import { 
   IgrDataChart, IIgrDataChartProps,
   IgrNumericYAxis, IIgrNumericYAxisProps,
@@ -37,6 +37,7 @@ interface IIgnStepLineSeriesProps extends IIgrStepLineSeriesProps {
 export const FIgrDataChart = forwardRef<any, PropsWithChildren<IIgrDataChartProps>>((props, ref) => {
   return <IgnDataChart dataChartRef={ref} {...props}>{props.children}</IgnDataChart>
 });
+
 export const FIgrCategoryXAxis = forwardRef<any, IIgrCategoryXAxisProps>((props, ref) => {
   return <IgnCategoryXAxis categoryXAxisRef={ref} {...props}></IgnCategoryXAxis>
 });
@@ -47,6 +48,7 @@ export const FIgrNumericYAxis = forwardRef<any, IIgrNumericYAxisProps>((props, r
   return <IgnNumericYAxis numericYAxisRef={ref} {...props}></IgnNumericYAxis>
 });
 export const FIgrLineSeries = forwardRef<any, IIgrLineSeriesProps>((props, ref) => {
+  console.log("FIgrLineSeries called with props:", props);
   return <IgnLineSeries lineSeriesRef={ref} {...props}></IgnLineSeries>
 });
 export const FIgrSplineSeries = forwardRef<any, IIgrSplineSeriesProps>((props, ref) => {
@@ -81,17 +83,27 @@ export const IgnDataChart = dynamic(
     console.log("IgrDataChartComponent dynamically imported.");
 
     // refを設定するために新しく表示用のコンポーネントを作成
-    const IgnDataChartComponent = ({
-      dataChartRef,
-      ...props
-    }: IIgnDataChartProps) => {
+    const IgnDataChartComponent = forwardRef<any, PropsWithChildren<IIgnDataChartProps>>(({ dataChartRef, ...props }, ref) => {
+      useEffect(() => {
+        if (dataChartRef && ref) {
+          // onChartRefメソッドがないので、ここに直接ロジックを書きます
+          const chart = (dataChartRef as React.RefObject<IgrDataChart>).current;
+          // 以下にonChartRefでやっていた処理を追加する
+          if (chart) {
+            // ここでchartへの処理を行います
+          }
+        }
+      }, [dataChartRef, ref]);
+
       return <IgrDataChart ref={dataChartRef} {...props}></IgrDataChart>;
-    };
+    });
 
     return IgnDataChartComponent;
   },
   { ssr: false }
 );
+
+
 
 // カテゴリX軸 ダイナミックインポート
 export const IgnCategoryXAxis = dynamic(
