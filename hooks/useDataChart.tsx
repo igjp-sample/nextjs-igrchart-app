@@ -8,6 +8,7 @@ import {
   IgrLineSeries, IIgrLineSeriesProps, 
   IgrSplineSeries, IIgrSplineSeriesProps, 
   IgrStepLineSeries, IIgrStepLineSeriesProps,
+  IgrCrosshairLayer, IIgrCrosshairLayerProps,
 } from "igniteui-react-charts";
 
 // refを設定するためのインターフェースを定義
@@ -32,6 +33,9 @@ interface IIgnSplineSeriesProps extends IIgrSplineSeriesProps {
 interface IIgnStepLineSeriesProps extends IIgrStepLineSeriesProps {
   stepLineSeriesRef: LegacyRef<IgrStepLineSeries>;
 }
+interface IIgnCrosshairLayerProps extends IIgrCrosshairLayerProps {
+  crosshairLayerRef: LegacyRef<IgrCrosshairLayer>;
+}
 
 // forwardRefを使ってrefを設定するためのコンポーネントを作成
 export const FIgrDataChart = forwardRef<any, PropsWithChildren<IIgrDataChartProps>>((props, ref) => {
@@ -54,6 +58,9 @@ export const FIgrSplineSeries = forwardRef<any, IIgrSplineSeriesProps>((props, r
 });
 export const FIgrStepLineSeries = forwardRef<any, IIgrStepLineSeriesProps>((props, ref) => {
   return <IgnStepLineSeries stepLineSeriesRef={ref} {...props}></IgnStepLineSeries>
+});
+export const FIgrCrosshairLayer = forwardRef<any, IIgrCrosshairLayerProps>((props, ref) => {
+  return <IgnCrosshairLayer crosshairLayerRef={ref} {...props}></IgnCrosshairLayer>
 });
 
 // DataChart ダイナミックインポート
@@ -263,6 +270,35 @@ export const IgnStepLineSeries = dynamic(
     };
 
     return IgnStepLineSeriesComponent;
+  },
+  { ssr: false }
+);
+
+// 固定Y軸の描画 ダイナミックインポート
+export const IgnCrosshairLayer = dynamic(
+  async () => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const {
+      IgrCrosshairLayer,
+      IgrCrosshairLayerModule,
+     } = await import(
+      "igniteui-react-charts"
+    );
+
+    IgrCrosshairLayerModule.register();
+
+    // ダイナミックインポートが完了したことを確認するためのログ
+    console.log("IgrCrosshairLayerComponent dynamically imported.");
+
+    // refを設定するために新しく表示用のコンポーネントを作成
+    const IgnCrosshairLayerComponent = ({
+      crosshairLayerRef,
+      ...props
+    }: IIgnCrosshairLayerProps) => {
+      return <IgrCrosshairLayer ref={crosshairLayerRef} {...props}></IgrCrosshairLayer>;
+    };
+
+    return IgnCrosshairLayerComponent;
   },
   { ssr: false }
 );
