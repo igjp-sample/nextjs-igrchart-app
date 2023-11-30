@@ -26,13 +26,16 @@ const DataChartNext = () => {
   const [ruValue, setRuValue] = useState(0);
 
   // ハイライトモード
-  const [highlightingMode, setHighlightingMode] = useState("FadeOthersSpecific");
+  const [highlightingMode, setHighlightingMode] = useState("FadeOthers");
   // Auto
   // Brighten
   // BrightenSpecific
   // FadeOthers
   // FadeOthersSpecific
   // None  
+
+  // 描画している線の太さ
+  const [lineThickness, setLineThickness] = useState(5);
 
   // チャートのrefを設定
   const onChartRef = (chart: IgrDataChart) => {
@@ -74,6 +77,31 @@ const DataChartNext = () => {
     if (!stepLineSeries) { return; }
     stepLineSeriesRef.current = stepLineSeries;
   };
+
+  // ハイライトモードの変更
+  const onHighlightingModeChanged = (newMode: string) => {
+    setHighlightingMode(newMode);
+    if (chartRef.current && crosshairLayerRef.current) {
+      const strokeColor = newMode === "None" ? "Transparent" : "Black";
+      crosshairLayerRef.current.outline = strokeColor;
+    }
+  };
+
+  // 線の太さの変更
+  const onLineThicknessChanged = (newThickness: number) => {
+    setLineThickness(newThickness);
+    if (chartRef.current && lineSeriesRef.current) {
+      lineSeriesRef.current.thickness = newThickness;
+    }
+  };
+
+  // ハイライトモードの変更に伴う処理
+  useEffect(() => {
+    if (chartRef.current && crosshairLayerRef.current) {
+      const strokeColor = highlightingMode === "None" ? "Transparent" : "Black";
+      crosshairLayerRef.current.outline = strokeColor;
+    }
+  }, [highlightingMode]);
 
   return (
     <div className={styles.container}>
@@ -136,6 +164,7 @@ const DataChartNext = () => {
               valueMemberPath="USA"
               xAxisName="xAxis"
               yAxisName="yAxis"
+              thickness={lineThickness}
             />
             <FIgrSplineSeries
               ref={onSplineSeriesRef}
@@ -161,6 +190,31 @@ const DataChartNext = () => {
           </FIgrDataChart>
         </div>
       </div>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", marginTop: "10px" }}>
+        {/* ハイライトモード変更用のボタン */}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>ハイライトモード</div>
+          <div style={{ display: "flex" }}>
+            <button onClick={() => onHighlightingModeChanged("FadeOthers")}>FadeOthers</button>
+            <div style={{ width: "1em" }} /> {/* 間隔用のディバイダー */}
+            <button onClick={() => onHighlightingModeChanged("Brighten")}>Brighten</button>
+          </div>
+        </div>
+
+        {/* 線の太さ変更用のボタン */}
+        <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>ラインの強調</div>
+          <div style={{ display: "flex" }}>
+            <button onClick={() => onLineThicknessChanged(2)}>Thickness 2</button>
+            <div style={{ width: "1em" }} /> {/* 間隔用のディバイダー */}
+            <button onClick={() => onLineThicknessChanged(5)}>Thickness 5</button>
+            <div style={{ width: "1em" }} /> {/* 間隔用のディバイダー */}
+            <button onClick={() => onLineThicknessChanged(8)}>Thickness 8</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };
