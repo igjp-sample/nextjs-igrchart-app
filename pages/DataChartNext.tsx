@@ -44,15 +44,6 @@ class DataChartNext extends React.Component {
       <div className="container sample">
         <div className="container" style={{ height: "100%" }}>
 
-          <select id="highlightingMode" onChange={this.onHighlightingModeChanged}>
-            <option>Auto</option>
-            <option>Brighten</option>
-            <option>BrightenSpecific</option>
-            <option>FadeOthers</option>
-            <option>FadeOthersSpecific</option>
-            <option>None</option>
-          </select>
-
           <FIgrDataChart
             ref={this.onChartRef}
             width="800px"
