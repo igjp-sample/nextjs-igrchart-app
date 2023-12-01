@@ -15,7 +15,8 @@ const DataChartNext = () => {
 
   // refを設定するための変数を定義
   const chartRef = useRef<IgrDataChart>(null);
-  const crosshairLayerRef = useRef<IgrCrosshairLayer>(null);
+  const crosshairLayerRef1 = useRef<IgrCrosshairLayer>(null);
+  const crosshairLayerRef2 = useRef<IgrCrosshairLayer>(null);
   const lineSeriesRef = useRef<IgrLineSeries>(null);
   const splineSeriesRef = useRef<IgrSplineSeries>(null);
   const stepLineSeriesRef = useRef<IgrStepLineSeries>(null);
@@ -51,8 +52,10 @@ const DataChartNext = () => {
     chart.actualWindowRectChanged = (s, e) => {
       const x = e.newRect.left + e.newRect.width / 2;
       const y = e.newRect.top + e.newRect.height / 2;
-      if(crosshairLayerRef.current) {
-        crosshairLayerRef.current.cursorPosition = { x: x, y: y };
+      const x2 = e.newRect.left + e.newRect.width / 2 + 0.2;
+      if(crosshairLayerRef1.current) {
+        crosshairLayerRef1.current.cursorPosition = { x: x, y: y };
+        crosshairLayerRef2.current.cursorPosition = { x: x2, y: y };
         setUsValue(lineSeriesRef.current?.getSeriesValue({ x: x, y: y }, true, true) || 0);
         setChValue(splineSeriesRef.current?.getSeriesValue({ x: x, y: y }, true, true) || 0);
         setRuValue(stepLineSeriesRef.current?.getSeriesValue({ x: x, y: y }, true, true) || 0);
@@ -61,11 +64,21 @@ const DataChartNext = () => {
   };
 
   // 固定Y軸の描画
-  const onCrosshairLayerRef = (crosshairLayer: IgrCrosshairLayer) => {
+  const onCrosshairLayerRef1 = (crosshairLayer: IgrCrosshairLayer) => {
     if (!crosshairLayer) { return; }
-    crosshairLayerRef.current = crosshairLayer;
-    crosshairLayerRef.current.cursorPosition = { x: 0.5, y: 0.5 };
+    crosshairLayerRef1.current = crosshairLayer;
+    crosshairLayerRef1.current.cursorPosition = { x: 0.5, y: 0.5 };
   };
+
+  // 2本目のY軸の描画
+  const onCrosshairLayerRef2 = (crosshairLayer: IgrCrosshairLayer) => {
+    if (!crosshairLayer) { return; }
+    crosshairLayerRef2.current = crosshairLayer;
+    crosshairLayerRef2.current.cursorPosition = { x: 0.5 + 0.2, y: 0.5 };
+    crosshairLayerRef2.current.getItemIndex({ x: 0.2, y: 0.2 })
+  };
+
+  // チャートのrefを設定
   const onLineSeriesRef = (lineSeries: IgrLineSeries) => {
     if (!lineSeries) { return; }
     lineSeriesRef.current = lineSeries;
@@ -82,9 +95,9 @@ const DataChartNext = () => {
   // ハイライトモードの変更
   const onHighlightingModeChanged = (newMode: string) => {
     setHighlightingMode(newMode);
-    if (chartRef.current && crosshairLayerRef.current) {
+    if (chartRef.current && crosshairLayerRef1.current) {
       const strokeColor = newMode === "None" ? "Transparent" : "Black";
-      crosshairLayerRef.current.outline = strokeColor;
+      crosshairLayerRef1.current.outline = strokeColor;
     }
   };
 
@@ -98,9 +111,9 @@ const DataChartNext = () => {
 
   // ハイライトモードの変更に伴う処理
   useEffect(() => {
-    if (chartRef.current && crosshairLayerRef.current) {
+    if (chartRef.current && crosshairLayerRef1.current) {
       const strokeColor = highlightingMode === "None" ? "Transparent" : "Black";
-      crosshairLayerRef.current.outline = strokeColor;
+      crosshairLayerRef1.current.outline = strokeColor;
     }
   }, [highlightingMode]);
 
@@ -144,6 +157,7 @@ const DataChartNext = () => {
           {/* オーバーレイ用のコンテナ */}
           <div ref={overlayRef} style={{ position: "relative" }} />
 
+          {/* チャート（上） */}
           <FIgrDataChart
             ref={onChartRef}
             width="800px"
@@ -151,8 +165,11 @@ const DataChartNext = () => {
             dataSource={dummyData}
             bottomMargin={10}
           >
+            {/* X軸・Y軸 */}
             <FIgrCategoryXAxis name="xAxis" label="X" labelVisibility={1} />
             <FIgrNumericYAxis name="yAxis" labelVisibility={1} maximumValue={4} minimumValue={-2} majorStroke="white" />
+
+            {/* ライン */}
             <FIgrStepLineSeries
               name="seriesSwitch1"
               valueMemberPath="Switch1"
@@ -166,6 +183,8 @@ const DataChartNext = () => {
               yAxisName="yAxis"
             />
           </FIgrDataChart>
+
+          {/* チャート（下） */}
           <FIgrDataChart
             ref={onChartRef}
             width="800px"
@@ -178,8 +197,11 @@ const DataChartNext = () => {
             defaultInteraction="dragPan"
             highlightingMode={highlightingMode}
           >
+            {/* X軸・Y軸 */}
             <FIgrCategoryXAxis name="xAxis" label="X" />
             <FIgrNumericYAxis name="yAxis" labelVisibility={1} />
+
+            {/* ライン */}
             <FIgrLineSeries
               ref={onLineSeriesRef}
               name="series1"
@@ -203,10 +225,19 @@ const DataChartNext = () => {
               xAxisName="xAxis"
               yAxisName="yAxis"
             />
+
+            {/* 固定Y軸1st・固定Y軸2nd */}
             <FIgrCrosshairLayer
-              ref={onCrosshairLayerRef}
-              name="CrosshairLayer"
+              ref={onCrosshairLayerRef1}
+              name="CrosshairLayer1"
               brush="Black"
+              horizontalLineVisibility="Collapsed"
+              showDefaultTooltip="true"
+            />
+            <FIgrCrosshairLayer
+              ref={onCrosshairLayerRef2}
+              name="CrosshairLayer2"
+              brush="red"
               horizontalLineVisibility="Collapsed"
               showDefaultTooltip="true"
             />
