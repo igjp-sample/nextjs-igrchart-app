@@ -19,6 +19,7 @@ const DataChartNext = () => {
   const lineSeriesRef = useRef<IgrLineSeries>(null);
   const splineSeriesRef = useRef<IgrSplineSeries>(null);
   const stepLineSeriesRef = useRef<IgrStepLineSeries>(null);
+  const overlayRef = useRef(null);
 
   // 固定Y軸の値
   const [usValue, setUsValue] = useState(0);
@@ -43,8 +44,8 @@ const DataChartNext = () => {
 
     // 上下グラフの同期
     chart.syncChannel = "channelA";
-    chart.synchronizeHorizontally = true;
-    chart.synchronizeVertically = true;
+    chart.synchronizeHorizontally = true; // 横軸の同期
+    chart.synchronizeVertically = true; // 縦軸の同期
 
     //固定Y軸の描画
     chart.actualWindowRectChanged = (s, e) => {
@@ -103,6 +104,25 @@ const DataChartNext = () => {
     }
   }, [highlightingMode]);
 
+  // データ表示ボタンの処理
+  const onVieDataButtonClick = () => {
+    const overlay = document.createElement("div");
+    overlay.style.position = "absolute";
+    overlay.style.top = "520px"; // 適切な位置を指定
+    overlay.style.left = "50%";
+    overlay.style.transform = "translate(-50%, -50%)";
+    overlay.style.backgroundColor = "rgba(255, 0, 0, 0.5)"; // 適切なスタイルを指定
+    overlay.style.padding = "10px";
+    overlay.style.borderRadius = "5px";
+
+    // テキストを作成
+    overlay.innerText = usValue.toString();
+    // 既存のオーバーレイをクリア
+    overlayRef.current.innerHTML = "";
+    // オーバーレイに追加
+    overlayRef.current.appendChild(overlay);
+  };
+
   return (
     <div className={styles.container}>
       <div className={`${styles.container} ${styles.row_layout}`} style={{ height: "100%" }}>
@@ -121,6 +141,9 @@ const DataChartNext = () => {
           </dl>
         </div>
         <div>
+          {/* オーバーレイ用のコンテナ */}
+          <div ref={overlayRef} style={{ position: "relative" }} />
+
           <FIgrDataChart
             ref={onChartRef}
             width="800px"
@@ -212,6 +235,14 @@ const DataChartNext = () => {
             <div style={{ width: "1em" }} /> {/* 間隔用のディバイダー */}
             <button onClick={() => onLineThicknessChanged(8)}>Thickness 8</button>
           </div>
+        </div>
+
+        {/* データ表示ボタン */}
+        <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>テキストの表示</div>
+            <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+              <button onClick={onVieDataButtonClick}>ViewData</button>
+            </div>
         </div>
       </div>
 
