@@ -37,7 +37,9 @@ const DataChartNext = () => {
   // None  
 
   // 描画している線の太さ
-  const [lineThickness, setLineThickness] = useState(5);
+  const [lineThicknessUSA, setLineThicknessUSA] = useState(2);
+  const [lineThicknessChina, setLineThicknessChina] = useState(2);
+  const [lineThicknessRussia, setLineThicknessRussia] = useState(2);
 
   // チャートのrefを設定
   const onChartRef = (chart: IgrDataChart) => {
@@ -102,10 +104,35 @@ const DataChartNext = () => {
   };
 
   // 線の太さの変更
-  const onLineThicknessChanged = (newThickness: number) => {
-    setLineThickness(newThickness);
-    if (chartRef.current && lineSeriesRef.current) {
-      lineSeriesRef.current.thickness = newThickness;
+  const onLineThicknessChanged = (country: number) => {
+    switch (country) {
+      case 1:
+        if (lineSeriesRef.current.thickness === 5) {
+          setLineThicknessUSA(2);
+        }else{
+          setLineThicknessUSA(5);
+        }
+        setLineThicknessChina(2);
+        setLineThicknessRussia(2);
+        break;
+      case 2:
+        if (splineSeriesRef.current.thickness === 5) {
+          setLineThicknessChina(2);
+        }else{
+          setLineThicknessChina(5);
+        }
+        setLineThicknessUSA(2);
+        setLineThicknessRussia(2);
+        break;
+      case 3:
+        if (stepLineSeriesRef.current.thickness === 5) {
+          setLineThicknessRussia(2);
+        }else{
+          setLineThicknessRussia(5);
+        }
+        setLineThicknessUSA(2);
+        setLineThicknessChina(2);
+        break;
     }
   };
 
@@ -121,8 +148,8 @@ const DataChartNext = () => {
   const onVieDataButtonClick = () => {
     const overlay = document.createElement("div");
     overlay.style.position = "absolute";
-    overlay.style.top = "520px"; // 適切な位置を指定
-    overlay.style.left = "50%";
+    overlay.style.top = "520px"; // 適切な縦位置を指定
+    overlay.style.left = "50%"; // 適切な横位置を指定
     overlay.style.transform = "translate(-50%, -50%)";
     overlay.style.backgroundColor = "rgba(255, 0, 0, 0.5)"; // 適切なスタイルを指定
     overlay.style.padding = "10px";
@@ -205,16 +232,16 @@ const DataChartNext = () => {
             <FIgrLineSeries
               ref={onLineSeriesRef}
               name="series1"
-              title="USA"
               valueMemberPath="USA"
               xAxisName="xAxis"
               yAxisName="yAxis"
-              thickness={lineThickness}
+              thickness={lineThicknessUSA}
             />
             <FIgrSplineSeries
               ref={onSplineSeriesRef}
               name="series2"
               valueMemberPath="China"
+              thickness={lineThicknessChina}
               xAxisName="xAxis"
               yAxisName="yAxis"
             />
@@ -222,6 +249,7 @@ const DataChartNext = () => {
               ref={onStepLineSeriesRef}
               name="series3"
               valueMemberPath="Russia"
+              thickness={lineThicknessRussia}
               xAxisName="xAxis"
               yAxisName="yAxis"
             />
@@ -260,11 +288,11 @@ const DataChartNext = () => {
         <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
           <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>ラインの強調</div>
           <div style={{ display: "flex" }}>
-            <button onClick={() => onLineThicknessChanged(2)}>Thickness 2</button>
+            <button onClick={() => onLineThicknessChanged(1)}>USA</button>
             <div style={{ width: "1em" }} /> {/* 間隔用のディバイダー */}
-            <button onClick={() => onLineThicknessChanged(5)}>Thickness 5</button>
+            <button onClick={() => onLineThicknessChanged(2)}>China</button>
             <div style={{ width: "1em" }} /> {/* 間隔用のディバイダー */}
-            <button onClick={() => onLineThicknessChanged(8)}>Thickness 8</button>
+            <button onClick={() => onLineThicknessChanged(3)}>Russia</button>
           </div>
         </div>
 
