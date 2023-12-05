@@ -36,6 +36,10 @@ export const IgnCalendar = dynamic(
       ...props
     }: IIgnCalendarProps) => {
       return <IgrCalendar ref={calendarRef} locale="ja-JP" selection="range" {...props}></IgrCalendar>;
+      // en-US アメリカ
+      // ja-JP 日本
+      // ko-KR 韓国
+      // zh-CN 中国
     };
 
     return IgnCalendarComponent;
