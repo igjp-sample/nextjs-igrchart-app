@@ -14,7 +14,8 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1>
-          <Link href="./DataChartNext">データチャート（Next.js）</Link>
+          <p><Link href="./DataChartNext">データチャート（Next.js）</Link></p>
+          <p><Link href="./CalendarNext">カレンダー（Next.js）</Link></p>
         </h1>        
       </main>
 

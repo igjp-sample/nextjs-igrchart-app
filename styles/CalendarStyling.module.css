@@ -1,0 +1,15 @@
+/* 追加部分 */
+.local-class igc-calendar [part="header"] {
+    display: none;
+}
+.local-class igc-calendar [part="header-date"] {
+    display: none;
+}
+.local-class igc-calendar [part="header-title"] {
+    display: none;
+}
+/* important等の直接変更はReactの仕組みに合わない */
+.hide-element {
+    display: none !important;
+}
+
