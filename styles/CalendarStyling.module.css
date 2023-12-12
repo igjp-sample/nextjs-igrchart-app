@@ -1,4 +1,14 @@
-/* 追加部分 */
+.root {
+    --ig-font-family: 'Roboto', sans-serif !important;
+    font-size: large !important;
+    color: blue !important;
+}
+
+/* date */
+.local-class igc-calendar [part="date"] {
+    color: blue;
+}
+/* header */
 .local-class igc-calendar [part="header"] {
     display: none;
 }

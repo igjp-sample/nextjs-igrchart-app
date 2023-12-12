@@ -1,50 +1,63 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  FIgrCalendar,
-} from "../hooks/useCalendar";
+import { FIgrCalendar } from "../hooks/useCalendar";
 import "igniteui-webcomponents/themes/light/bootstrap.css";
 import "../styles/CalendarStyling.module.css";
 
 const DataChartNext = () => {
   const [calendarStyle, setCalendarStyle] = useState({ width: '400px' });
-  const [headerVisible, setHeaderVisible] = useState(true);
   const calendarRef = useRef(null);
 
-  // 【検証】ヘッダーをdisplay: none; として、左側に表示されるカレンダーの幅を広げる
-  //   <div part="header">　←　この要素に対して display: none; を反映することでヘッダーを非表示にしたい
-  //     <h5 part="header-title">
-  //     <slot name="title">Select range</slot>
-  //   </h5>
-  //   <h2 part="header-date"><span>12月12日</span>
-  //   <span> - </span>
-  //   <span>12月21日</span></h2>
-  //   </div>
+  // Label名と一致するデータを設定
+  const sampleData = [
+    '2023年12月14日木曜日',
+    '2023年12月20日水曜日',
+  ];
+
   useEffect(() => {
-    // width が600pxで反映されることは確認済み
-    setCalendarStyle(prevStyle => ({
-      ...prevStyle,
-      width: '600px',
-    }));
+    // FIgrCalendar コンポーネントがロードされるまで待機
+    const fetchData = async () => {
+      const { FIgrCalendar: DynamicFIgrCalendar } = await import("../hooks/useCalendar");
 
-    // レンダリング後に非表示にしたい要素に対してCSSクラスを追加
-    setHeaderVisible(false);
+      // FIgrCalendar コンポーネントのスタイルを変更
+      setCalendarStyle(prevStyle => ({
+        ...prevStyle,
+        width: '600px', // 横幅 600px
+        '--ig-font-family': 'MS Serif, sans-serif', // MS明朝 フォント
+        '--ig-h4-font-size': '40px', // Start - End のフォントサイズ
+        '--ig-subtitle-1-font-size': '25px', // 日付のフォントサイズ
+        backgroundColor: '#336699', // 背景色
+        color: 'red', // 「年月選択時」のフォント色
+      }));
 
-    // FIgrCalendarのDOMにアクセスしてスタイルを変更
-    if (calendarRef.current) {
-      const headerElement = calendarRef.current.querySelector(".header");
-      if (headerElement) {
-        headerElement.style.setProperty("display", "none", "important");
+      // レンダリング後にサンプルデータに含まれる日付に対して強調表示のスタイルを適用
+      if (calendarRef.current) {
+        const calendarInstance = calendarRef.current.calendarRef.current;
+        if (calendarInstance) {
+          // ビューが変更されたらスタイルを適用
+          calendarInstance.onViewChange = () => {
+            sampleData.forEach(label => {
+              // 日付に対応するセルを取得
+              const cellElement = calendarInstance.calendarElement.querySelector(`[aria-label="${label}"]`);
+              if (cellElement) {
+                // スタイルを適用
+                cellElement.style.cssText = `
+                  ${cellElement.style.cssText};
+                  background: yellow;
+                `;
+              }
+            });
+          };
+        }
       }
-    }
-  }, []);
-  // 【検証結果1】with: 600px; は反映されるが、headerに対してdisplay: none; は反映されない
-  // 【検証結果2】important を付与しても反映されない（Reactに合わない）
+    };
+
+    fetchData();
+  }, [calendarRef]);
 
   return (
     <div className="container sample" style={{ display: 'flex' }}>
-      {/* ここにカレンダーヘッダー部分のみを新たに表示したい */}
-      <FIgrCalendar ref={calendarRef} style={calendarStyle} className={`header ${headerVisible ? '' : 'hide-element'}`}/>
-      <p/>
+      <FIgrCalendar ref={calendarRef} style={calendarStyle} />
+      <p />
     </div>
   );
 };
