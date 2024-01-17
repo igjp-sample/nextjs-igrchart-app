@@ -54,7 +54,16 @@ const DataChartNext = () => {
     chart.actualWindowRectChanged = (s, e) => {
       const x = e.newRect.left + e.newRect.width / 2;
       const y = e.newRect.top + e.newRect.height / 2;
-      const x2 = e.newRect.left + e.newRect.width / 2 + 0.2;
+
+      // コメントアウト
+      // const x2 = e.newRect.left + e.newRect.width / 2 + 0.2;
+
+      //   割合　　　・・・最小値: 0 , 中央値:0.5 , 最大値:1
+      //   グラフ値　・・・最小値: 0 , 中央値:25  , 最大値:50
+      //   25 の位置に固定するには 0.5  を指定する
+      //   24 の位置に固定するには 0.48 を指定する
+      const x2 = 0.48;
+
       if(crosshairLayerRef1.current) {
         crosshairLayerRef1.current.cursorPosition = { x: x, y: y };
         crosshairLayerRef2.current.cursorPosition = { x: x2, y: y };
@@ -76,7 +85,12 @@ const DataChartNext = () => {
   const onCrosshairLayerRef2 = (crosshairLayer: IgrCrosshairLayer) => {
     if (!crosshairLayer) { return; }
     crosshairLayerRef2.current = crosshairLayer;
-    crosshairLayerRef2.current.cursorPosition = { x: 0.5 + 0.2, y: 0.5 };
+
+    // コメントアウト
+    // crosshairLayerRef2.current.cursorPosition = { x: 0.5 + 0.2, y: 0.5 };
+
+    // 24 の位置に固定するには 0.48 を指定する
+    crosshairLayerRef2.current.cursorPosition = { x: 0.48, y: 0.5 };
     crosshairLayerRef2.current.getItemIndex({ x: 0.2, y: 0.2 })
   };
 
