@@ -3,12 +3,16 @@ import {
   FIgrDataChart, FIgrCategoryXAxis, FIgrNumericYAxis,
   FIgrLineSeries, FIgrSplineSeries, FIgrStepLineSeries,
   FIgrCrosshairLayer,
+  FIgrDataLegend,
 } from "../hooks/useDataChart";
 import {
   CountryRenewableElectricity
 } from "../hooks/CountryRenewableElectricity";
 import { IgrDataChart , IgrCrosshairLayer, IgrLineSeries, IgrSplineSeries, IgrStepLineSeries } from "igniteui-react-charts";
 import styles from "../styles/Home.module.css";
+
+// 凡例（DataLegend）の表示
+import { IgrDataLegend } from 'igniteui-react-charts';
 
 const DataChartNext = () => {
   const dummyData = new CountryRenewableElectricity();
@@ -21,6 +25,11 @@ const DataChartNext = () => {
   const splineSeriesRef = useRef<IgrSplineSeries>(null);
   const stepLineSeriesRef = useRef<IgrStepLineSeries>(null);
   const overlayRef = useRef(null);
+  const dataLegendRef = useRef<IgrDataLegend>(null);
+
+  // Objectを定義
+  const [chartObject, setChartObject] = useState<IgrDataChart | null>(null);
+  const [dataLegendObject, setDataLegendObject] = useState<IgrDataLegend | null>(null);
 
   // 固定Y軸の値
   const [usValue, setUsValue] = useState(0);
@@ -41,8 +50,12 @@ const DataChartNext = () => {
   const [lineThicknessChina, setLineThicknessChina] = useState(2);
   const [lineThicknessRussia, setLineThicknessRussia] = useState(2);
 
+  // ラベルロケーション表示・非表示のステータス
+  const [labelLocationMode, setLabelLocationMode] = useState(0);
+
   // チャートのrefを設定
   const onChartRef = (chart: IgrDataChart) => {
+    setChartObject(chart);
     if (!chart) { return; }
 
     // 上下グラフの同期
@@ -106,6 +119,14 @@ const DataChartNext = () => {
   const onStepLineSeriesRef = (stepLineSeries: IgrStepLineSeries) => {
     if (!stepLineSeries) { return; }
     stepLineSeriesRef.current = stepLineSeries;
+  };
+
+  // 凡例（DataLegend）のrefを設定
+  const onDataLegendRef = (legend: IgrDataLegend) => {
+    setDataLegendObject(legend);
+    if (!legend) { return; }
+    dataLegendRef.current = legend;
+    dataLegendRef.current.setState({});
   };
 
   // ハイライトモードの変更
@@ -177,6 +198,17 @@ const DataChartNext = () => {
     overlayRef.current.appendChild(overlay);
   };
 
+  // ラベルロケーション表示切り替えボタンの処理
+  const onLabelLocationButtonClick = () => {
+    console.log(labelLocationMode);
+    if (labelLocationMode === 1) {
+        setLabelLocationMode(0);
+    }
+    else {
+        setLabelLocationMode(1);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={`${styles.container} ${styles.row_layout}`} style={{ height: "100%" }}>
@@ -225,6 +257,14 @@ const DataChartNext = () => {
             />
           </FIgrDataChart>
 
+          {/* 凡例（DataLegend）の表示 */}
+          <div className="legend" style={{ textAlign: "left" }}>
+            <FIgrDataLegend
+                ref={onDataLegendRef}
+                target={chartObject}>
+            </FIgrDataLegend>
+          </div>
+
           {/* チャート（下） */}
           <FIgrDataChart
             ref={onChartRef}
@@ -240,12 +280,20 @@ const DataChartNext = () => {
           >
             {/* X軸・Y軸 */}
             <FIgrCategoryXAxis name="xAxis" label="X" />
-            <FIgrNumericYAxis name="yAxis" labelVisibility={1} />
+
+            {/* ラベルロケーションの追記 */}
+            <FIgrNumericYAxis 
+              name="yAxis" 
+              labelVisibility={labelLocationMode} // 1:非表示, 0:表示
+              title="TEST TITLE"
+              labelLocation="InsideLeft"/>
 
             {/* ライン */}
             <FIgrLineSeries
               ref={onLineSeriesRef}
               name="series1"
+              title="USA"
+              showDefaultTooltip="true"
               valueMemberPath="USA"
               xAxisName="xAxis"
               yAxisName="yAxis"
@@ -254,6 +302,8 @@ const DataChartNext = () => {
             <FIgrSplineSeries
               ref={onSplineSeriesRef}
               name="series2"
+              title="China"
+              showDefaultTooltip="true"
               valueMemberPath="China"
               thickness={lineThicknessChina}
               xAxisName="xAxis"
@@ -262,6 +312,8 @@ const DataChartNext = () => {
             <FIgrStepLineSeries
               ref={onStepLineSeriesRef}
               name="series3"
+              title="Russia"
+              showDefaultTooltip="true"
               valueMemberPath="Russia"
               thickness={lineThicknessRussia}
               xAxisName="xAxis"
@@ -317,6 +369,15 @@ const DataChartNext = () => {
               <button onClick={onVieDataButtonClick}>ViewData</button>
             </div>
         </div>
+
+        {/* ラベルロケーション表示切り替えボタン */}
+        <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>ラベル表示切り替え</div>
+            <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+              <button onClick={onLabelLocationButtonClick}>LabelLocation</button>
+            </div>
+        </div>
+
       </div>
 
     </div>

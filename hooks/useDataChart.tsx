@@ -9,6 +9,7 @@ import {
   IgrSplineSeries, IIgrSplineSeriesProps, 
   IgrStepLineSeries, IIgrStepLineSeriesProps,
   IgrCrosshairLayer, IIgrCrosshairLayerProps,
+  IgrDataLegend, IIgrDataLegendProps,
 } from "igniteui-react-charts";
 
 // refを設定するためのインターフェースを定義
@@ -36,6 +37,9 @@ interface IIgnStepLineSeriesProps extends IIgrStepLineSeriesProps {
 interface IIgnCrosshairLayerProps extends IIgrCrosshairLayerProps {
   crosshairLayerRef: LegacyRef<IgrCrosshairLayer>;
 }
+interface IIgnDataLegendProps extends IIgrDataLegendProps {
+  dataLegendRef: LegacyRef<IgrDataLegend>;
+}
 
 // forwardRefを使ってrefを設定するためのコンポーネントを作成
 export const FIgrDataChart = forwardRef<any, PropsWithChildren<IIgrDataChartProps>>((props, ref) => {
@@ -62,6 +66,9 @@ export const FIgrStepLineSeries = forwardRef<any, IIgrStepLineSeriesProps>((prop
 export const FIgrCrosshairLayer = forwardRef<any, IIgrCrosshairLayerProps>((props, ref) => {
   return <IgnCrosshairLayer crosshairLayerRef={ref} {...props}></IgnCrosshairLayer>
 });
+export const FIgrDataLegend = forwardRef<any, IIgrDataLegendProps>((props, ref) => {
+  return <IgnDataLegend dataLegendRef={ref} {...props}></IgnDataLegend>
+});
 
 // DataChart ダイナミックインポート
 export const IgnDataChart = dynamic(
@@ -74,6 +81,8 @@ export const IgnDataChart = dynamic(
       IgrDataChartVerticalCategoryModule,
       IgrDataChartScatterCoreModule,
       IgrDataChartScatterModule,
+      IgrDataChartCategoryModule, // Add for Tooltip
+      IgrNumberAbbreviatorModule, // Add for Tooltip
      } = await import(
       "igniteui-react-charts"
     );
@@ -83,6 +92,8 @@ export const IgnDataChart = dynamic(
     IgrDataChartVerticalCategoryModule.register();
     IgrDataChartScatterCoreModule.register();
     IgrDataChartScatterModule.register();
+    IgrDataChartCategoryModule.register(); // Add for Tooltip
+    IgrNumberAbbreviatorModule.register(); // Add for Tooltip
 
     // ダイナミックインポートが完了したことを確認するためのログ
     console.log("IgrDataChartComponent dynamically imported.");
@@ -299,6 +310,35 @@ export const IgnCrosshairLayer = dynamic(
     };
 
     return IgnCrosshairLayerComponent;
+  },
+  { ssr: false }
+);
+
+// 凡例 ダイナミックインポート
+export const IgnDataLegend = dynamic(
+  async () => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const {
+      IgrDataLegend,
+      IgrDataLegendModule,
+     } = await import(
+      "igniteui-react-charts"
+    );
+
+    IgrDataLegendModule.register();
+
+    // ダイナミックインポートが完了したことを確認するためのログ
+    console.log("IgrDataLegendComponent dynamically imported.");
+
+    // refを設定するために新しく表示用のコンポーネントを作成
+    const IgnDataLegendComponent = ({
+      dataLegendRef,
+      ...props
+    }: IIgnDataLegendProps) => {
+      return <IgrDataLegend ref={dataLegendRef} {...props}></IgrDataLegend>;
+    };
+
+    return IgnDataLegendComponent;
   },
   { ssr: false }
 );
