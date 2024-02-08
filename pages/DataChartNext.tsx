@@ -4,6 +4,7 @@ import {
   FIgrLineSeries, FIgrSplineSeries, FIgrStepLineSeries,
   FIgrCrosshairLayer,
   FIgrDataLegend,
+  FIgrDataToolTipLayer,
 } from "../hooks/useDataChart";
 import {
   CountryRenewableElectricity
@@ -11,8 +12,12 @@ import {
 import { IgrDataChart , IgrCrosshairLayer, IgrLineSeries, IgrSplineSeries, IgrStepLineSeries } from "igniteui-react-charts";
 import styles from "../styles/Home.module.css";
 
-// 凡例（DataLegend）の表示
-import { IgrDataLegend } from 'igniteui-react-charts';
+// 凡例（DataLegend）の取得
+// ツールチップレイヤーの取得
+import { 
+  IgrDataLegend,
+  IgrDataToolTipLayer 
+} from 'igniteui-react-charts';
 
 const DataChartNext = () => {
   const dummyData = new CountryRenewableElectricity();
@@ -26,6 +31,7 @@ const DataChartNext = () => {
   const stepLineSeriesRef = useRef<IgrStepLineSeries>(null);
   const overlayRef = useRef(null);
   const dataLegendRef = useRef<IgrDataLegend>(null);
+  const dataToolTipLayerRef = useRef<IgrDataToolTipLayer>(null);
 
   // Objectを定義
   const [chartObject, setChartObject] = useState<IgrDataChart | null>(null);
@@ -44,6 +50,11 @@ const DataChartNext = () => {
   // FadeOthers
   // FadeOthersSpecific
   // None  
+
+  // ツールチップモード
+  const [tooltipMode, setTooltipMode] = useState("Individual");
+  // individual
+  // grouped
 
   // 描画している線の太さ
   const [lineThicknessUSA, setLineThicknessUSA] = useState(2);
@@ -200,12 +211,21 @@ const DataChartNext = () => {
 
   // ラベルロケーション表示切り替えボタンの処理
   const onLabelLocationButtonClick = () => {
-    console.log(labelLocationMode);
     if (labelLocationMode === 1) {
         setLabelLocationMode(0);
     }
     else {
         setLabelLocationMode(1);
+    }
+  };
+
+  // ツールチップ切り替えボタンの処理
+  const onTooltipButtonClick = () => {
+    if (tooltipMode === "Individual") {
+        setTooltipMode("grouped");
+    }
+    else {
+        setTooltipMode("Individual");
     }
   };
 
@@ -278,6 +298,15 @@ const DataChartNext = () => {
             defaultInteraction="dragPan"
             highlightingMode={highlightingMode}
           >
+
+            {/* ツールチップレイヤーの表示 */}
+            <FIgrDataToolTipLayer 
+              name="myDataTooltip"
+              groupingMode={tooltipMode} // Individual, グループ：grouped
+              groupedPositionModeX="pinRight"
+              groupedPositionModeY="pinTop">
+            </FIgrDataToolTipLayer>
+
             {/* X軸・Y軸 */}
             <FIgrCategoryXAxis name="xAxis" label="X" />
 
@@ -372,14 +401,21 @@ const DataChartNext = () => {
 
         {/* ラベルロケーション表示切り替えボタン */}
         <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
-          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>ラベル表示切り替え</div>
+          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>左ラベル表示・非表示</div>
             <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
               <button onClick={onLabelLocationButtonClick}>LabelLocation</button>
             </div>
         </div>
 
-      </div>
+        {/* ツールチップ切り替えボタン */}
+        <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+          <div style={{ width: "10em", fontWeight: "bold", marginRight: "1em" }}>ツールチップ切り替え</div>
+            <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
+              <button onClick={onTooltipButtonClick}>Tooltip</button>
+            </div>
+        </div>
 
+      </div>
     </div>
   );
 };

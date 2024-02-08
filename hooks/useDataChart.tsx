@@ -10,6 +10,7 @@ import {
   IgrStepLineSeries, IIgrStepLineSeriesProps,
   IgrCrosshairLayer, IIgrCrosshairLayerProps,
   IgrDataLegend, IIgrDataLegendProps,
+  IgrDataToolTipLayer, IIgrDataToolTipLayerProps,
 } from "igniteui-react-charts";
 
 // refを設定するためのインターフェースを定義
@@ -40,6 +41,9 @@ interface IIgnCrosshairLayerProps extends IIgrCrosshairLayerProps {
 interface IIgnDataLegendProps extends IIgrDataLegendProps {
   dataLegendRef: LegacyRef<IgrDataLegend>;
 }
+interface IIgnDataToolTipLayerProps extends IIgrDataToolTipLayerProps {
+  dataToolTipLayerRef: LegacyRef<IgrDataToolTipLayer>;
+}
 
 // forwardRefを使ってrefを設定するためのコンポーネントを作成
 export const FIgrDataChart = forwardRef<any, PropsWithChildren<IIgrDataChartProps>>((props, ref) => {
@@ -68,6 +72,9 @@ export const FIgrCrosshairLayer = forwardRef<any, IIgrCrosshairLayerProps>((prop
 });
 export const FIgrDataLegend = forwardRef<any, IIgrDataLegendProps>((props, ref) => {
   return <IgnDataLegend dataLegendRef={ref} {...props}></IgnDataLegend>
+});
+export const FIgrDataToolTipLayer = forwardRef<any, IIgrDataToolTipLayerProps>((props, ref) => {
+  return <IgnDataToolTipLayer dataToolTipLayerRef={ref} {...props}></IgnDataToolTipLayer>
 });
 
 // DataChart ダイナミックインポート
@@ -339,6 +346,35 @@ export const IgnDataLegend = dynamic(
     };
 
     return IgnDataLegendComponent;
+  },
+  { ssr: false }
+);
+
+// ツールチップ ダイナミックインポート
+export const IgnDataToolTipLayer = dynamic(
+  async () => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    const {
+      IgrDataToolTipLayer,
+      IgrDataChartCategoryModule,
+     } = await import(
+      "igniteui-react-charts"
+    );
+
+    IgrDataChartCategoryModule.register();
+
+    // ダイナミックインポートが完了したことを確認するためのログ
+    console.log("IgrDataToolTipLayerComponent dynamically imported.");
+
+    // refを設定するために新しく表示用のコンポーネントを作成
+    const IgnDataToolTipLayerComponent = ({
+      dataToolTipLayerRef,
+      ...props
+    }: IIgnDataToolTipLayerProps) => {
+      return <IgrDataToolTipLayer ref={dataToolTipLayerRef} {...props}></IgrDataToolTipLayer>;
+    };
+
+    return IgnDataToolTipLayerComponent;
   },
   { ssr: false }
 );
